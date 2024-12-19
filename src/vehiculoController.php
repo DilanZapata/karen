@@ -160,4 +160,45 @@
 				
 			}
 		}
+        
+		
+		public function editarVehiculoControler(){
+			if (!isset($dataVehiculo[""],$dataVehiculo["num_identidad"],$dataVehiculo["placa_vahiculo_edit"],$dataVehiculo["tipo_vehiculo_edit"]) || $dataVehiculo["placa_vahiculo_anterior"] == "" ||$dataVehiculo["num_identidad"] == "" || $dataVehiculo["placa_vahiculo_edit"] == "" ||  $dataVehiculo["tipo_vehiculo_edit"] == "") {
+					
+				$mensaje=[
+					"titulo"=>"Error",
+					"mensaje"=>"Lo sentimos, los datos necesarios para editar el vehiculo son insuficientes."
+				];
+				return json_encode($mensaje);
+				exit();
+			}else {
+				$placa_vehiculo_anterior = $this->limpiarDatos($dataVehiculo["placa_vahiculo_anterior"]);
+				$num_identidad = $this->limpiarDatos($dataVehiculo["num_identidad"]);
+				$placa_vehiculo_edit = $this->limpiarDatos($dataVehiculo["placa_vahiculo_edit"]);
+				$tipo_vehiculo_edit = $this->limpiarDatos($dataVehiculo["tipo_vehiculo_edit"]);
+
+				$sentencia_vehiculos_edit = "UPDATE `vehiculos_personas` SET `placa_vehiculo`='$placa_vehiculo_edit', `tipo_vehiculo`='$tipo_vehiculo_edit' WHERE num_identificacion_persona = '$num_identidad' AND placa_vehiculo = '$placa_vehiculo_anterior';";
+
+				
+				$actualizar_vehiculo = $this->ejecutarInsert($sentencia_vehiculos_edit);
+				if ($actualizar_vehiculo != 1) {
+					$mensaje = [
+						"titulo" => "error",
+						"mensaje" => "Ha ocurrido un error a la hora de actualizar el vehiculo de el propietario $num_identidad",
+						"icono" => "error",
+						"tipoMensaje" => "normal"
+					];
+					echo json_encode($mensaje);
+				}else {
+					$mensaje = [
+						"titulo" => "Eliminacion Completa",
+						"mensaje" => "El Vehiculo se actualizo correctamente en la base de datos.",
+						"icono" => "success",
+						"tipoMensaje" => "normal"
+					];
+					echo json_encode($mensaje);
+				}
+			}
+			
+		}
     }

@@ -61,7 +61,7 @@ class vehiculoTest extends TestCase {
         $claseVehiculo = new VehiculoController($this->dbMock);
 
         $datosVehiculo = [
-            'placa_vehiculo_visitante' => 'MPO01D',
+            'placa_vahiculo_anterior' => 'MPO01D',
             'tipo_vehiculo_visitante' => 'MT',
             'num_documento_visitante' => '1112038489',
         ];
@@ -69,7 +69,31 @@ class vehiculoTest extends TestCase {
         $resultado = $claseVehiculo->registrarVehiculoControler($datosVehiculo);
 
         $this->assertEquals(
-            '{"titulo":"Vehiculo Asociado","mensaje":"El vehiculo ha sido registrado con exito."}',
+            '{"titulo":"Error","mensaje":"Lo sentimos, los datos necesarios para registrar el vehiculo son insuficientes."}',
+            $resultado
+        );
+    }
+
+
+    /* Funcion Caso Prueba Unitaria Intento de edicion de vehiculo con datos incompleto o vacios */
+    public function testEditarVehiculoControlerDatosVehiculoEditar() {
+
+        $claseVehiculo = new VehiculoController($this->dbMock);
+
+        $datosVehiculo = [
+            'placa_vahiculo_anterior' => 'MPO01D',
+            'placa_vahiculo_edit' => '',
+            'tipo_vehiculo_edit' => '',
+            'placa_vahiculo_anterior' => '',
+            'num_identidad' => '',
+            'placa_vahiculo_edit' => '',
+            'tipo_vehiculo_edit' => '1112038489',
+        ];
+
+        $resultado = $claseVehiculo->editarVehiculoControler($datosVehiculo);
+
+        $this->assertEquals(
+            '{"titulo":"Error","mensaje":"Lo sentimos, los datos necesarios para editar el vehiculo son insuficientes."}',
             $resultado
         );
     }
