@@ -72,9 +72,7 @@
 				}else {
 					$mensaje=[
 						"titulo"=>"Ya eres propietario",
-						"mensaje"=>"Tal pararece que la persona a la que se ententa asociar el vehiculo con placas ya lo tiene asociado.",
-						"icono"=> "info",
-						"tipoMensaje"=>"normal"
+						"mensaje"=>"Tal pararece que la persona a la que se ententa asociar el vehiculo con placas ya lo tiene asociado."
 					];
 					return $mensaje;
 				}

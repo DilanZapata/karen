@@ -162,8 +162,16 @@
 		}
         
 		
-		public function editarVehiculoControler(){
-			if (!isset($dataVehiculo[""],$dataVehiculo["num_identidad"],$dataVehiculo["placa_vahiculo_edit"],$dataVehiculo["tipo_vehiculo_edit"]) || $dataVehiculo["placa_vahiculo_anterior"] == "" ||$dataVehiculo["num_identidad"] == "" || $dataVehiculo["placa_vahiculo_edit"] == "" ||  $dataVehiculo["tipo_vehiculo_edit"] == "") {
+		public function editarVehiculoControler(array $dataVehiculo){
+			if (!isset($dataVehiculo["placa_vahiculo_anterior"],
+            $dataVehiculo["num_identidad"],
+            $dataVehiculo["placa_vahiculo_edit"],
+            $dataVehiculo["tipo_vehiculo_edit"]) 
+            || 
+            $dataVehiculo["placa_vahiculo_anterior"] == "" ||
+            $dataVehiculo["num_identidad"] == "" || 
+            $dataVehiculo["placa_vahiculo_edit"] == "" ||  
+            $dataVehiculo["tipo_vehiculo_edit"] == "") {
 					
 				$mensaje=[
 					"titulo"=>"Error",
@@ -188,17 +196,77 @@
 						"icono" => "error",
 						"tipoMensaje" => "normal"
 					];
-					echo json_encode($mensaje);
+					return json_encode($mensaje);
 				}else {
 					$mensaje = [
-						"titulo" => "Eliminacion Completa",
+						"titulo" => "Edicion Completa",
 						"mensaje" => "El Vehiculo se actualizo correctamente en la base de datos.",
-						"icono" => "success",
-						"tipoMensaje" => "normal"
 					];
-					echo json_encode($mensaje);
+					return json_encode($mensaje);
+                
 				}
 			}
 			
+		}
+
+        
+		public function eliminarVehiculoControler(array $dataVehiculo){
+
+			if (!isset($dataVehiculo["placa_vahiculo_anterior"],$dataVehiculo["num_identidad"]) || $dataVehiculo["placa_vahiculo_anterior"] == "" ||$dataVehiculo["num_identidad"] == "") {
+				
+				$mensaje=[
+					"titulo"=>"Error",
+					"mensaje"=>"Lo sentimos, los datos necesarios para eliminar el vehiculo son insuficientes."
+				];
+				return json_encode($mensaje);
+				exit();
+			}else {
+				$placa_vehiculo_anterior = $this->limpiarDatos($dataVehiculo["placa_vahiculo_anterior"]);
+				$num_identidad = $this->limpiarDatos($dataVehiculo["num_identidad"]);
+                
+
+                
+				$sentencia_vehiculos_edit = "DELETE FROM `vehiculos_personas` WHERE num_identificacion_persona = '$num_identidad' AND placa_vehiculo = '$placa_vehiculo_anterior';";
+
+				
+				$actualizar_vehiculo = $this->ejecutarConsulta($sentencia_vehiculos_edit);
+				if (!$actualizar_vehiculo) {
+					$mensaje = [
+						"titulo" => "error",
+						"mensaje" => "Ha ocurrido un error al intentar eliminar el vehiculo de el propietario",
+						"icono" => "error",
+						"tipoMensaje" => "normal"
+					];
+					return json_encode($mensaje);
+				}else {
+                    $sentencia_vehiculos_edit = "SELECT FROM `vehiculos_personas` WHERE num_identificacion_persona = '$num_identidad' AND placa_vehiculo = '$placa_vehiculo_anterior';";
+
+				
+				    $buscar_vehi = $this->ejecutarConsulta($sentencia_vehiculos_edit);
+
+                    if (!$buscar_vehi) {
+                        $mensaje = [
+                            "titulo" => "Eliminacion Fallida",
+                            "mensaje" => "El Vehiculo no se elimino correctamente en la base de datos."
+                        ];
+                        return json_encode($mensaje);
+                    }else {
+                        if ($buscar_vehi->num_rows > 0) {
+                            $mensaje = [
+                                "titulo" => "Eliminacion Completa",
+                                "mensaje" => "El Vehiculo se elimino correctamente en la base de datos."
+                            ];
+                            return json_encode($mensaje);
+                        }else {
+                            $mensaje = [
+                                "titulo" => "Eliminacion Fallida",
+                                "mensaje" => "El Vehiculo no se elimino correctamente en la base de datos."
+                            ];
+                            return json_encode($mensaje);
+                        }
+                    }
+				}
+			}
+
 		}
     }
