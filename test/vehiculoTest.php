@@ -159,14 +159,14 @@ class vehiculoTest extends TestCase {
         );
     }
 
-    /* Envio de datos correctos pruebas unitarias */
+    /* Envio de datos correctos pruebas unitarias donde se dan datos para que elemine correctamente a un vehiculo*/
     public function testEliminarVehiculoControlerVehiculoFallida() {
 
         $claseVehiculo = new VehiculoController($this->dbMock);
 
         $datosVehiculo = [
             'placa_vahiculo_anterior' => 'MPO01D',
-            'num_identidad' => '112038489',
+            'num_identidad' => '112038485',
         ];
         
         $resultado = $claseVehiculo->eliminarVehiculoControler($datosVehiculo);
