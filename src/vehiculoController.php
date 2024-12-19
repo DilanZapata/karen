@@ -48,9 +48,7 @@
 					}
 					$mensaje=[
 						"titulo"=>"Campos incompletos",
-						"mensaje"=>"Lo sentimos, los campos ".$invalidos." no cumplen con el formato solicitado.",
-						"icono"=> "error",
-						"tipoMensaje"=>"normal"
+						"mensaje"=>"Lo sentimos, los campos no cumplen con el formato solicitado."
 					];
 					return json_encode($mensaje);
 					exit();

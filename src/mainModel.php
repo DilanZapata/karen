@@ -63,9 +63,7 @@
 							}else {
 								$mensaje=[
 									"titulo"=>"Vehiculo Asociado",
-									"mensaje"=>"El vehiculo con placas ".$placa." ha sido registrado con exito.",
-									"icono"=> "success",
-									"tipoMensaje"=>"normal"
+									"mensaje"=>"El vehiculo ha sido registrado con exito."
 								];
 								return $mensaje;
 							}

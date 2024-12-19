@@ -16,26 +16,60 @@ class vehiculoTest extends TestCase {
         $this->dbMock = $this->createMock(\PDO::class);
     }
 
-    public function testProcesarFormularioDatosValidosvigi() {
+    /* Funcion Caso Prueba Unitaria Intento de registro con datos vacios y faltantes */
+    public function testRegistrarVehiculoControlerDatosVaciosFaltantes() {
 
         $claseVehiculo = new VehiculoController($this->dbMock);
 
         $datosVehiculo = [
-            'tipo_documento' => 'CC',
-            'num_identificacion' => '1112149201',
-            'nombres' => 'juan pablo',
-            'apellidos' => 'osorio',
-            'telefono' => '3023646789',
-            'correo' => 'osoriogal@gmail.com',
-            'rol_usuario' => 'jv',
-            'tipo_vehiculo_vigilante' => 'MT',
-            'placa_vehiculo_vigilante' => 'CAB879',
+            'placa_vehiculo_visitante' => 'MPO01D',
+            'tipo_vehiculo_visitante' => 'MT',
+            'num_documento_visitante' => '',
         ];
 
         $resultado = $claseVehiculo->registrarVehiculoControler($datosVehiculo);
 
         $this->assertEquals(
             '{"titulo":"Error","mensaje":"Lo sentimos, los datos necesarios para registrar el vehiculo son insuficientes."}',
+            $resultado
+        );
+    }
+    
+    /* Funcion Caso Prueba Unitaria Intento de registro con datos vacios y faltantes */
+    public function testRegistrarVehiculoControlerDatosFormatoInvalido() {
+
+        $claseVehiculo = new VehiculoController($this->dbMock);
+
+        $datosVehiculo = [
+            'placa_vehiculo_visitante' => 'MpO01D',
+            'tipo_vehiculo_visitante' => 'MT',
+            'num_documento_visitante' => 'CC11120384',
+        ];
+
+        $resultado = $claseVehiculo->registrarVehiculoControler($datosVehiculo);
+
+        $this->assertEquals(
+            '{"titulo":"Campos incompletos","mensaje":"Lo sentimos, los campos no cumplen con el formato solicitado."}',
+            $resultado
+        );
+    }
+    
+    
+    /* Funcion Caso Prueba Unitaria Intento de registro con datos vacios y faltantes */
+    public function testRegistrarVehiculoControlerDatosVehiculoRegistrado() {
+
+        $claseVehiculo = new VehiculoController($this->dbMock);
+
+        $datosVehiculo = [
+            'placa_vehiculo_visitante' => 'MPO01D',
+            'tipo_vehiculo_visitante' => 'MT',
+            'num_documento_visitante' => '1112038489',
+        ];
+
+        $resultado = $claseVehiculo->registrarVehiculoControler($datosVehiculo);
+
+        $this->assertEquals(
+            '{"titulo":"Vehiculo Asociado","mensaje":"El vehiculo ha sido registrado con exito."}',
             $resultado
         );
     }
