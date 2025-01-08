@@ -1,6 +1,6 @@
 <?php
 	
-	namespace Johan\Pruebas;
+	namespace Karen\Pruebas;
 	use \mysqli;
 
 
@@ -10,8 +10,7 @@
 			mysqli_report(MYSQLI_REPORT_OFF);
 			
 			try {
-				$enlace_conexion = new mysqli("localhost", "root", "", "cerberus_bdd");
-				//   $enlace_conexion = new mysqli("localhost", "arcanoposada_adsob", "CDqaQeehjt9y", "arcanoposada_cerbeb"); 
+				$enlace_conexion = new mysqli("localhost", "root", "", "cerberus_bdd2");
 			
 				if ($enlace_conexion->connect_error) {
 					throw new \Exception("No se realizó la conexión: " . $enlace_conexion->connect_error);

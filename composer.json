@@ -1,13 +1,12 @@
 {
-    "name": "johan/pruebas",
-    "description": "A brief description of what your package does.", 
+    "name": "karen/pruebas",
     "require": {
         "phpunit/phpunit": "^11.5",
         "psr/log": "^3.0"
     },
     "autoload": {
         "psr-4": {
-            "Johan\\Pruebas\\": "src/"
+            "Karen\\Pruebas\\": "src/"
         }
     },
     "authors": [
@@ -15,6 +14,5 @@
             "name": "ProgramadoZ",
             "email": "dilanadrianzapataortiz26@gmail.com"
         }
-    ],
-    "license": "MIT"
+    ]
 }

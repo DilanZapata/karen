@@ -1,7 +1,7 @@
 <?php
-    namespace Johan\Pruebas;
+    namespace Karen\Pruebas;
     
-    use Johan\Pruebas\mainModel;
+    use Karen\Pruebas\mainModel;
 
     class VehiculoController extends mainModel{
 

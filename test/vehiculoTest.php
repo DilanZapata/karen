@@ -1,7 +1,7 @@
 <?php
-namespace Johan\Pruebas\Test;
+namespace Karen\Pruebas\Test;
 
-use Johan\Pruebas\VehiculoController;
+use Karen\Pruebas\VehiculoController;
 
 
 /* require_once __DIR__ . '/../src/vehiculoController.php'; */
