@@ -269,4 +269,67 @@
 			}
 
 		}
+		
+
+		public function listarPropietariosVehiculosControler(array $dataVehiculo){
+			
+            $tipo_listado = $this->limpiarDatos($dataVehiculo['tipoListado']);
+            $placa_vehiculo = $this->limpiarDatos($dataVehiculo['placa_vehiculo']);
+            unset($dataVehiculo['tipoListado']);
+			$sentencia_vehiculos = "SELECT num_identificacion_persona, placa_vehiculo, tipo_vehiculo, fecha_hora_ultimo_ingreso, permanencia FROM vehiculos_personas WHERE placa_vehiculo = '$placa_vehiculo'";
+
+			$listado_vehiculos = $this->ejecutarConsulta($sentencia_vehiculos);
+			unset($sentencia_vehiculos);
+
+			$output['data'] = '';
+			if (!$listado_vehiculos) {
+				$output['data'] = $tipo_listado == 'tabla' 
+                    ? 'Error al cargar los vehiculos como tabla' 
+                    : 'Error al cargar los vehiculos como tarjetas';
+			}else {
+				if ($listado_vehiculos->num_rows < 1) {
+                    $output['data'] = 'No se encontraron propietarios registrados';
+				}else {
+					if ($tipo_listado == 'tabla') {
+						$output['data'] = 'Se encontraron propietarios registrados y se listan como tabla';
+					}elseif($tipo_listado == 'card') {
+                        $output['data'] = 'Se encontraron propietarios registrados y se listan como tarjetas';
+					}
+				}
+				$listado_vehiculos->free();
+				unset($listado_vehiculos);
+				return json_encode($output, JSON_UNESCAPED_UNICODE);
+			}
+			
+		}
+
+
+		public function seleccionarVisitante(array $dataVisitante){
+            
+            $num_identificacion = $this->limpiarDatos($dataVisitante['num_identificacion']);
+
+            $consultar_visitante_query = "SELECT * FROM `visitantes` WHERE num_identificacion = '$num_identificacion';";
+            $consultar_visitante = $this->ejecutarConsulta($consultar_visitante_query);
+            unset($num_id,$num_identificacion,$consultar_visitante_query);
+            if (!$consultar_visitante) {
+                $mensaje = [
+					"mensaje" => "Error al consultar el visitante",	
+				];
+                return json_encode($mensaje);
+            }else {
+                if ($consultar_visitante->num_rows < 1) {
+					
+					$mensaje = [
+						"mensaje" => "No logramos encontrar el visitante",	
+					];
+					return json_encode($mensaje);
+                }else {
+					
+					$mensaje = [
+						"mensaje" => "logramos encontrar el visitante",	
+					];
+					return json_encode($mensaje);
+                }
+            }
+        }
     }
