@@ -1,5 +1,5 @@
 <?php
-    namespace Karen\Pruebas;
+    namespace Karen\Pruebas;  
     
     use Karen\Pruebas\mainModel;
 
