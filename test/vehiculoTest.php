@@ -79,7 +79,7 @@ class vehiculoTest extends TestCase {
     public function testEditarVehiculoControlerDatosVehiculoEditar() {
 
         $claseVehiculo = new VehiculoController($this->dbMock);
-
+        //metodo
         $datosVehiculo = [
             'placa_vahiculo_anterior' => 'MPO01D',
             'placa_vahiculo_edit' => '',
