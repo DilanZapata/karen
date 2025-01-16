@@ -16,7 +16,7 @@ class vehiculoTest extends TestCase {
         $this->dbMock = $this->createMock(\PDO::class);
     }
 
-    /* Funcion Caso Prueba Unitaria Intento de registro con datos vacios y faltantes 1 */
+    /* Funcion Caso Prueba Unitaria Intento de registro con datos vacios y faltantes 1 ejemplo prueba */
     public function testRegistrarVehiculoControlerDatosVaciosFaltantes() {
 
         $claseVehiculo = new VehiculoController($this->dbMock);
